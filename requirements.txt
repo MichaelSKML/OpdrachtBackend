@@ -1,5 +1,4 @@
 Flask
 Flask-Cors
-json
 requests
 mysql-connector
