@@ -10,6 +10,7 @@ import erik
 import felix
 import dominique
 import recept
+import registreren
 
 app = Flask(__name__)
 CORS(app)
@@ -56,4 +57,6 @@ def felixpost():
   print(data_json["naam"])
   return "hoi"
 
-
+@app.route("/registreren")
+def registreren():
+  return registreren.test()
