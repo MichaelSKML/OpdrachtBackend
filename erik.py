@@ -1,12 +1,9 @@
-import mysql.connector
+
+
+import onzepython
 
 def methodeerik(tweeword, driewoord):
-    mydb = mysql.connector.connect(
-        host="yc2403allpurpose.mysql.database.azure.com",  #port erbij indien mac
-        user="yc2403admin",
-        password="abcd1234ABCD!@#$",
-        database="demopythondag"
-    )
+    mydb = onzepython.mydb
 
     mycursor = mydb.cursor()
     sql = "INSERT INTO recept (naam, aantalsterren) VALUES (%s, %s)"
@@ -17,3 +14,18 @@ def methodeerik(tweeword, driewoord):
 
     print(mycursor.rowcount, "record inserted.")
     return "Je recept is aangemaakt!" 
+
+def methodeerik2():
+    mydb = onzepython.mydb
+
+    mycursor = mydb.cursor()
+
+    mycursor.execute("SELECT * FROM recept")
+
+    myresult = mycursor.fetchall()
+    eindstring = ""
+    for x in myresult:
+        print(x[1], " - ", x[3])
+        eindstring += x[1]+", "
+    return "yes: " + eindstring
+
