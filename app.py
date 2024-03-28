@@ -9,14 +9,14 @@ from flask import request
 import erik
 import felix
 import dominique
-import recept
+
 
 app = Flask(__name__)
 CORS(app)
 
 @app.route("/")
 def helloWorld():
-  return "Hello, cross-origin-world!"
+  return "Onze web app is nu online!"
 
 @app.route("/felix")
 def methodefelix():
@@ -38,13 +38,10 @@ def methodedominique():
 def methodeerik(eenword, tweeword):
   return erik.methodeerik(eenword, tweeword)
 
-@app.route("/recept")
-def methoderecept():
-  return recept.allesSelecterenMethode()
+@app.route("/erik")
+def methodeerik2():
+  return erik.methodeerik2()
 
-@app.route("/recept2")
-def methoderecept2():
-  return recept.tweedeAllesSelecterenMethode()
 
 @app.route("/felixjson")
 def felixjson():
