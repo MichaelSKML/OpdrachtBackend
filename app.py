@@ -52,5 +52,3 @@ def felixpost():
   data_json = json.loads(request.data.decode('utf-8'))
   print(data_json["naam"])
   return "hoi"
-
-
