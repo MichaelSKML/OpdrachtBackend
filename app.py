@@ -36,7 +36,7 @@ def methodefelix3(variabele1):
 def methodedominique():
     return dominique.open_youtube_link('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
 
-@app.route("/erik1/<eenword>/<tweeword>")
+@app.route("/erik/<eenword>/<tweeword>")
 def methodeerik(eenword, tweeword):
   return erik.methodeerik(eenword, tweeword)
 
