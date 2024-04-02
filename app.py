@@ -1,11 +1,12 @@
 # pip install flask
 # pip install flask-cors
+# pip install Flask-Session
+
 from flask import Flask
 from flask_cors import CORS
 import json
 import requests
-from flask import request
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, request, session, render_template, redirect, url_for
 
 import erik
 import felix
@@ -13,8 +14,14 @@ import dominique
 import registreren
 
 app = Flask(__name__)
-app.secret_key = "sleutel2121213"  
+app.secret_key = "607aeae2805bbcc94ab67a45cc0dbbe797b27bb760a8afdf"  
+app.config['SESSION_COOKIE_SAMESITE'] = 'None' 
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_COOKIE_SECURE'] = True
+from flask_session import Session
 CORS(app)
+
+Session(app)
 
 # @app.route("/")
 # def helloWorld():
@@ -58,11 +65,7 @@ def felixpost():
 @app.route("/registreren", methods=['POST'])
 def registreren_route():
     return registreren.registreren_function()
-  
-@app.route('/')
-def inloggen_form_route():
-    return render_template('inloggen.html')
-  
+
 @app.route('/login', methods=['POST'])
 def inloggen_route2():
     return registreren.login()
@@ -74,3 +77,4 @@ def email_route():
 @app.route('/accountpagina')
 def account_route():
     return registreren.account_route()
+  
