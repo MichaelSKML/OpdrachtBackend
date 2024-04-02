@@ -1,5 +1,5 @@
 
-
+import mysql.connector
 import onzepython
 
 def methodeerik(tweeword, driewoord):
@@ -27,5 +27,5 @@ def methodeerik2():
     for x in myresult:
         print(x[1], " - ", x[3])
         eindstring += x[1]+", "
-    return "yes: " + eindstring
+    return "select all from database: " + eindstring
 
