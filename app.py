@@ -5,18 +5,20 @@ from flask_cors import CORS
 import json
 import requests
 from flask import request
+from flask import Flask, render_template, request, redirect, url_for
 
 import erik
 import felix
 import dominique
-import recept
+import registreren
 
 app = Flask(__name__)
+app.secret_key = "sleutel2121213"  
 CORS(app)
 
-@app.route("/")
-def helloWorld():
-  return "Hello, cross-origin-world!"
+# @app.route("/")
+# def helloWorld():
+#   return "Onze web app is nu online!"
 
 @app.route("/felix")
 def methodefelix():
@@ -34,17 +36,14 @@ def methodefelix3(variabele1):
 def methodedominique():
     return dominique.open_youtube_link('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
 
-@app.route("/erik1/<eenword>/<tweeword>")
+@app.route("/erik/<eenword>/<tweeword>")
 def methodeerik(eenword, tweeword):
   return erik.methodeerik(eenword, tweeword)
 
-@app.route("/recept")
-def methoderecept():
-  return recept.allesSelecterenMethode()
+@app.route("/erik")
+def methodeerik2():
+  return erik.methodeerik2()
 
-@app.route("/recept2")
-def methoderecept2():
-  return recept.tweedeAllesSelecterenMethode()
 
 @app.route("/felixjson")
 def felixjson():
@@ -56,4 +55,22 @@ def felixpost():
   print(data_json["naam"])
   return "hoi"
 
-
+@app.route("/registreren", methods=['POST'])
+def registreren_route():
+    return registreren.registreren_function()
+  
+@app.route('/')
+def inloggen_form_route():
+    return render_template('inloggen.html')
+  
+@app.route('/login', methods=['POST'])
+def inloggen_route2():
+    return registreren.login()
+  
+@app.route('/email', methods=['POST'])
+def email_route():
+    return registreren.email()
+  
+@app.route('/accountpagina')
+def account_route():
+    return registreren.account_route()
