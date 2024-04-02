@@ -3,8 +3,14 @@ from flask_cors import CORS
 import mysql.connector
 
 app = Flask(__name__)
-app.secret_key = "sleutel2121213"  
+app.secret_key = "607aeae2805bbcc94ab67a45cc0dbbe797b27bb760a8afdf"  
+app.config['SESSION_COOKIE_SAMESITE'] = 'None' 
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_COOKIE_SECURE'] = True
+from flask_session import Session
 CORS(app)
+
+Session(app)
 
 mydb = mysql.connector.connect(
     host="yc2403allpurpose.mysql.database.azure.com",
@@ -36,7 +42,15 @@ def registreren_function():
         mydb.commit()
         cursor.close()  
 
-        return 'Account succesvol aangemaakt!'
+        return """
+        <script>
+        setTimeout(function() {
+            window.location.href = 'http://127.0.0.1:5500/accountpagina.html';
+        }, 9000);
+        </script>
+        Account succesvol aangemaakt!
+        """
+
     except mysql.connector.Error as e:
         print("Oeps! Er ging iets mis.", e)
         return str(e)
@@ -60,7 +74,7 @@ def login():
         session['wachtwoord'] = user2[2]
         session['email'] = user2[3]
         session['geboortedatum'] = user2[4]
-        session['geslacht'] = user2[5] 
+        session['geslacht'] = user2[5]
         session['woonplaats'] = user2[6]
 
         return """
@@ -79,7 +93,7 @@ def email():
     emailadres = request.form['email']
     
     cursor = mydb.cursor()
-    cursor.execute("SELECT * FROM gebruikers2 WHERE email = %s", (emailadres,))
+    cursor.execute("SELECT * FROM gebruikers2 WHERE email = %s" (emailadres))
     user3 = cursor.fetchone()
     
     if user3:
