@@ -23,9 +23,9 @@ CORS(app)
 
 Session(app)
 
-# @app.route("/")
-# def helloWorld():
-#   return "Onze web app is nu online!"
+@app.route("/")
+def helloWorld():
+  return "Onze web app is nu online!"
 
 @app.route("/felix")
 def methodefelix():
