@@ -40,7 +40,7 @@ def registreren_function():
         cursor = mydb.cursor()
         cursor.execute("INSERT INTO gebruikers2 (gebruikersnaam, email, wachtwoord, geboortedatum, geslacht, woonplaats) VALUES (%s, %s, %s, %s, %s, %s)", (gebruikersnaam, email, wachtwoord, geboortedatum, geslacht, woonplaats))
         mydb.commit()
-        cursor.close()  
+        cursor.close()
 
         return """
         <script>
@@ -93,7 +93,7 @@ def email():
     emailadres = request.form['email']
     
     cursor = mydb.cursor()
-    cursor.execute("SELECT * FROM gebruikers2 WHERE email = %s" (emailadres))
+    cursor.execute("SELECT * FROM gebruikers2 WHERE email = %s", (emailadres,))
     user3 = cursor.fetchone()
     
     if user3:
@@ -112,7 +112,7 @@ def account_route():
                                geslacht=session.get('geslacht'), 
                                woonplaats=session.get('woonplaats'))
     else:
-        return redirect(url_for('login_form')) 
+        return redirect(url_for('/login')) 
     
 if __name__ == '__main__':
     app.run(debug=True)
