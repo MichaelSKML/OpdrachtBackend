@@ -12,6 +12,7 @@ import erik
 import felix
 import dominique
 import registreren
+import michael
 
 app = Flask(__name__)
 app.secret_key = "607aeae2805bbcc94ab67a45cc0dbbe797b27bb760a8afdf"  
@@ -77,4 +78,9 @@ def email_route():
 @app.route('/accountpagina')
 def account_route():
     return registreren.account_route()
+
+@app.route('/receptdetails/<gid>')
+def detailsrecept(gid):
+    print("abc")
+    return michael.receptdetails(gid)
   
