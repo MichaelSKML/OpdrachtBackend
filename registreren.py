@@ -1,6 +1,7 @@
 from flask import Flask, request, session, render_template, redirect, url_for
 from flask_cors import CORS
 import mysql.connector
+import json
 
 app = Flask(__name__)
 app.secret_key = "607aeae2805bbcc94ab67a45cc0dbbe797b27bb760a8afdf"  
@@ -23,14 +24,14 @@ mydb = mysql.connector.connect(
 def registreren_function():
     gebruikersnaam = request.form['gebruikersnaam']
     wachtwoord = request.form['wachtwoord']
-    email = request.form['email']
+    emailadres = request.form['emailadres']
     geboortedatum = request.form['geboortedatum']
     geslacht = request.form['geslacht']
     woonplaats = request.form['woonplaats']
 
     print("Received Form Data:")
     print(f"Gebruikersnaam: {gebruikersnaam}")
-    print(f"Email: {email}")
+    print(f"emailadres: {emailadres}")
     print(f"Wachtwoord: {wachtwoord}")
     print(f"Geboortedatum: {geboortedatum}")
     print(f"Geslacht: {geslacht}")
@@ -38,7 +39,7 @@ def registreren_function():
 
     try:
         cursor = mydb.cursor()
-        cursor.execute("INSERT INTO gebruikers2 (gebruikersnaam, email, wachtwoord, geboortedatum, geslacht, woonplaats) VALUES (%s, %s, %s, %s, %s, %s)", (gebruikersnaam, email, wachtwoord, geboortedatum, geslacht, woonplaats))
+        cursor.execute("INSERT INTO account (gebruikersnaam, emailadres, wachtwoord, geboortedatum, geslacht, woonplaats) VALUES (%s, %s, %s, %s, %s, %s)", (gebruikersnaam, emailadres, wachtwoord, geboortedatum, geslacht, woonplaats))
         mydb.commit()
         cursor.close()
 
@@ -61,39 +62,40 @@ def login_form():
 
 @app.route('/login', methods=['POST'])
 def login():
-    username = request.form['gebruikersnaam']
-    password = request.form['wachtwoord']
-
+    data_json = json.loads(request.data.decode('utf-8'))
+    # username = request.form['gebruikersnaam']
+    # password = request.form['wachtwoord']
+    username=data_json["gebruikersnaam"]
+    password=data_json["wachtwoord"]
+    # emailadres=data_json["emailadres"]
+    # geboortedatum=data_json["geboortedatum"]
+    # geslacht=data_json["geslacht"]
+    # woonplaats=data_json["woonplaats"]
+    
     cursor = mydb.cursor()
-    cursor.execute("SELECT * FROM gebruikers2 WHERE gebruikersnaam = %s AND wachtwoord = %s", (username, password))
+    cursor.execute("SELECT * FROM account WHERE gebruikersnaam = %s AND wachtwoord = %s", (username, password))
     user2 = cursor.fetchone()
 
     if user2:
         session['loggedin'] = True
         session['gebruikersnaam'] = user2[1]
         session['wachtwoord'] = user2[2]
-        session['email'] = user2[3]
+        session['emailadres'] = user2[3]
         session['geboortedatum'] = user2[4]
         session['geslacht'] = user2[5]
         session['woonplaats'] = user2[6]
 
-        return """
-        <script>
-        setTimeout(function() {
-            window.location.href = 'http://127.0.0.1:5500/accountpagina.html';
-        }, 2000);
-        </script>
-        Je bent nu ingelogd!
-        """
+        return "ingelogd"
+    
     else:
         return "Het inloggen is niet gelukt."
 
 @app.route('/email', methods=['POST'])
 def email():
-    emailadres = request.form['email']
+    emailadres = request.form['emailadres']
     
     cursor = mydb.cursor()
-    cursor.execute("SELECT * FROM gebruikers2 WHERE email = %s", (emailadres,))
+    cursor.execute("SELECT * FROM account WHERE emailadres = %s", (emailadres,))
     user3 = cursor.fetchone()
     
     if user3:
@@ -105,12 +107,12 @@ def email():
 def account_route():
     if 'loggedin' in session:
         return render_template('accountpagina.html', 
-                               gebruikersnaam=session.get('gebruikersnaam'), 
-                               wachtwoord=session.get('wachtwoord'), 
-                               email=session.get('email'), 
-                               geboortedatum=session.get('geboortedatum'), 
-                               geslacht=session.get('geslacht'), 
-                               woonplaats=session.get('woonplaats'))
+            gebruikersnaam=session.get('gebruikersnaam'), 
+            wachtwoord=session.get('wachtwoord'), 
+            emailadres=session.get('emailadres'), 
+            geboortedatum=session.get('geboortedatum'), 
+            geslacht=session.get('geslacht'), 
+            woonplaats=session.get('woonplaats'))
     else:
         return redirect(url_for('/login')) 
     
