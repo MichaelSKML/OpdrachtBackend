@@ -1,6 +1,7 @@
 from flask import Flask, request, session, render_template, redirect, url_for
 from flask_cors import CORS
 import mysql.connector
+import json
 
 app = Flask(__name__)
 app.secret_key = "607aeae2805bbcc94ab67a45cc0dbbe797b27bb760a8afdf"  
@@ -61,9 +62,16 @@ def login_form():
 
 @app.route('/login', methods=['POST'])
 def login():
-    username = request.form['gebruikersnaam']
-    password = request.form['wachtwoord']
-
+    data_json = json.loads(request.data.decode('utf-8'))
+    # username = request.form['gebruikersnaam']
+    # password = request.form['wachtwoord']
+    username=data_json["gebruikersnaam"]
+    password=data_json["wachtwoord"]
+    # emailadres=data_json["emailadres"]
+    # geboortedatum=data_json["geboortedatum"]
+    # geslacht=data_json["geslacht"]
+    # woonplaats=data_json["woonplaats"]
+    
     cursor = mydb.cursor()
     cursor.execute("SELECT * FROM account WHERE gebruikersnaam = %s AND wachtwoord = %s", (username, password))
     user2 = cursor.fetchone()
@@ -77,20 +85,14 @@ def login():
         session['geslacht'] = user2[5]
         session['woonplaats'] = user2[6]
 
-        return """
-        <script>
-        setTimeout(function() {
-            window.location.href = 'http://127.0.0.1:5500/accountpagina.html';
-        }, 2000);
-        </script>
-        Je bent nu ingelogd!
-        """
+        return "ingelogd"
+    
     else:
         return "Het inloggen is niet gelukt."
 
 @app.route('/email', methods=['POST'])
 def email():
-    emailadres = request.form['email']
+    emailadres = request.form['emailadres']
     
     cursor = mydb.cursor()
     cursor.execute("SELECT * FROM account WHERE emailadres = %s", (emailadres,))
