@@ -79,7 +79,8 @@ def account_route():
 def detailsrecept(gid):
     varreceptdetails = michael.receptdetails(gid)
     varingredientbijrecept = michael.ingredientbijrecept(gid)
-    return {"recept": varreceptdetails[0] , "ingredient": varingredientbijrecept}
+    varstappen = michael.stappenbijrecept(gid)
+    return {"recept": varreceptdetails[0] , "ingredient": varingredientbijrecept, "stappen": varstappen}
 
 @app.route('/receptaanmaken/<stap>')
 def staptoevoegen(stap):
