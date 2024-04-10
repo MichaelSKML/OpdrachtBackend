@@ -48,10 +48,6 @@ def methodedominique():
 def methodeerik(eenword, tweeword):
   return erik.methodeerik(eenword, tweeword)
 
-@app.route("/erik")
-def methodeerik2():
-  return erik.methodeerik2()
-
 
 @app.route("/felixjson")
 def felixjson():
@@ -83,4 +79,8 @@ def account_route():
 def detailsrecept(gid):
     print("abc")
     return michael.receptdetails(gid)
+
+@app.route('/receptaanmaken/<stap>')
+def staptoevoegen(stap):
+    return erik.staptoevoegen(stap)
   
