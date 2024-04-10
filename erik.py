@@ -15,17 +15,19 @@ def methodeerik(tweeword, driewoord):
     print(mycursor.rowcount, "record inserted.")
     return "Je recept is aangemaakt!" 
 
-def methodeerik2():
+
+
+def staptoevoegen(stap):
+
     mydb = onzepython.mydb
 
     mycursor = mydb.cursor()
+    sql = "INSERT INTO dummy_stappen (stap) VALUES (%s)"
+    val = [stap]
+    mycursor.execute(sql, val)
 
-    mycursor.execute("SELECT * FROM recept")
+    mydb.commit()
 
-    myresult = mycursor.fetchall()
-    eindstring = ""
-    for x in myresult:
-        print(x[1], " - ", x[3])
-        eindstring += x[1]+", "
-    return "select all from database: " + eindstring
+    print(mycursor.rowcount, "record inserted.")
+    return "Je stap is toegevoegd!" 
 
