@@ -53,7 +53,7 @@ def stappenbijrecept(gid):
 
   mycursor = mydb.cursor()
 
-  mycursor.execute("SELECT stappen.id, Stapbeschrijving, stappen.Afbeelding, stappen.recept_id, volgorde FROM stappen INNER JOIN recept ON stappen.recept_id = recept.recept_id ORDER by stappen.id ASC, volgorde ASC; WHERE recept.id = " +str(gid))
+  mycursor.execute("SELECT stappen.id, Stapbeschrijving, stappen.Afbeelding, stappen.recept_id, volgorde FROM stappen INNER JOIN recept ON stappen.recept_id = recept.recept_id WHERE recept.id = " +str(gid))
 
   myresultstappen = mycursor.fetchall()
   keys = [i[0] for i in mycursor.description]
