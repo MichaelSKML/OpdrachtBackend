@@ -32,7 +32,7 @@ def ingredientbijrecept(gid):
 
   mycursor = mydb.cursor()
 
-  mycursor.execute("SELECT ingredient.id, ingredient.naam, ingredient.recept_id, recept.id FROM ingredient INNER JOIN recept ON ingredient.recept_id = recept.recept_id WHERE recept.id = " +str(gid))
+  mycursor.execute("SELECT ingredient.id, ingredient.hoeveelheid, ingredient.naam, ingredient.recept_id, recept.id FROM ingredient INNER JOIN recept ON ingredient.recept_id = recept.recept_id WHERE recept.id = " +str(gid))
 
   myresultingredient = mycursor.fetchall()
   keys = [i[0] for i in mycursor.description]
@@ -41,3 +41,24 @@ def ingredientbijrecept(gid):
         dict(zip(keys, row)) for row in myresultingredient
     ]
   return dataingredient
+
+def stappenbijrecept(gid):
+  
+  mydb = mysql.connector.connect(
+        host="yc2403allpurpose.mysql.database.azure.com",
+        user="yc2403admin",
+        password="abcd1234ABCD!@#$",
+        database="demopythondag"
+    )
+
+  mycursor = mydb.cursor()
+
+  mycursor.execute("SELECT stappen.id, Stapbeschrijving, stappen.Afbeelding, stappen.recept_id, volgorde FROM stappen INNER JOIN recept ON stappen.recept_id = recept.recept_id ORDER by stappen.id ASC, volgorde ASC; WHERE recept.id = " +str(gid))
+
+  myresultstappen = mycursor.fetchall()
+  keys = [i[0] for i in mycursor.description]
+
+  datastappen = [
+        dict(zip(keys, row)) for row in myresultstappen
+    ]
+  return datastappen
