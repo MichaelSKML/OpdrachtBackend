@@ -77,10 +77,10 @@ def account_route():
 
 @app.route('/receptdetails/<gid>')
 def detailsrecept(gid):
-    print("abc")
-    return michael.receptdetails(gid)
+    varreceptdetails = michael.receptdetails(gid)
+    varingredientbijrecept = michael.ingredientbijrecept(gid)
+    return {"recept": varreceptdetails[0] , "ingredient": varingredientbijrecept}
 
 @app.route('/receptaanmaken/<stap>')
 def staptoevoegen(stap):
     return erik.staptoevoegen(stap)
-  
