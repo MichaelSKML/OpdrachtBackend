@@ -85,3 +85,7 @@ def detailsrecept(gid):
 @app.route('/receptaanmaken/<stap>')
 def staptoevoegen(stap):
     return erik.staptoevoegen(stap)
+
+@app.route('/receptaanmaken/<naam>')
+def receptnaamtoevoegen(naam):
+    return erik.receptnaamtoevoegen(naam)

@@ -31,3 +31,16 @@ def staptoevoegen(stap):
     print(mycursor.rowcount, "record inserted.")
     return "Je stap is toegevoegd!" 
 
+def receptnaamtoevoegen(naam):
+
+    mydb = onzepython.mydb
+
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO dummy_stappen (naam) VALUES (%s)"
+    val = [naam]
+    mycursor.execute(sql, val)
+
+    mydb.commit()
+
+    print(mycursor.rowcount, "record inserted.")
+    return "Je recept naam is toegevoegd!" 
