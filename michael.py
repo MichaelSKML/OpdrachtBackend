@@ -62,3 +62,24 @@ def stappenbijrecept(gid):
         dict(zip(keys, row)) for row in myresultstappen
     ]
   return datastappen
+
+def tagsbijrecept(gid):
+  
+  mydb = mysql.connector.connect(
+        host="yc2403allpurpose.mysql.database.azure.com",
+        user="yc2403admin",
+        password="abcd1234ABCD!@#$",
+        database="demopythondag"
+    )
+
+  mycursor = mydb.cursor()
+
+  mycursor.execute("SELECT idtag_recept, tag_id, naamtag FROM tag_recept INNER JOIN tag ON tag_id = idtag WHERE idtag_recept = " +str(gid))
+
+  myresulttags = mycursor.fetchall()
+  keys = [i[0] for i in mycursor.description]
+
+  datatags = [
+        dict(zip(keys, row)) for row in myresulttags
+    ]
+  return datatags
