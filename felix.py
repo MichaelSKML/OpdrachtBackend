@@ -95,3 +95,7 @@ def recepttoevoegen2temp(recept):
     mycursor.execute(sql, val)
     mydb.commit()
     return str(mycursor.lastrowid)
+
+def staptoevoegenaanrecept(stap, receptid):
+    print(receptid, stap["Stapbeschrijving"])
+    return "stap toevoegen"

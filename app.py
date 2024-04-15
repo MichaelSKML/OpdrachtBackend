@@ -99,3 +99,8 @@ def recept2tempdetails(gid):
 def recepttoevoegen2temp():
   data_json = json.loads(request.data.decode('utf-8'))
   return felix.recepttoevoegen2temp(data_json)
+
+@app.route('/staptoevoegenaanrecept/<receptid>', methods=['POST'])
+def staptoevoegenaanrecept(receptid):
+  data_json = json.loads(request.data.decode('utf-8'))
+  return felix.staptoevoegenaanrecept(data_json, receptid)
