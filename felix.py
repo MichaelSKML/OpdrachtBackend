@@ -79,7 +79,7 @@ def receptdetailsvanrecept(gid):
 
     mycursor = mydb.cursor()
 #    mycursor.execute("SELECT * FROM recept LEFT JOIN stappen ON stappen.recept_id = recept.id WHERE recept.id = '"+str(gid)+"'")
-    mycursor.execute("SELECT recept.naam as naam, stappen.StapBeschrijving as Stapbeschrijving, stappen.volgorde AS volgorde FROM recept LEFT JOIN stappen ON stappen.recept_id = recept.id LEFT JOIN ingredient ON ingredient.recept_id = recept.id WHERE recept.id = '"+str(gid)+"'")
+    mycursor.execute("SELECT recept.naam as naam, stappen.StapBeschrijving as Stapbeschrijving, stappen.volgorde AS volgorde , ingredient.naam as inaam, ingredient.volgorde AS ivolgorde FROM recept LEFT JOIN stappen ON stappen.recept_id = recept.id LEFT JOIN ingredient ON ingredient.recept_id = recept.id WHERE recept.id = '"+str(gid)+"'")
     myresult = mycursor.fetchall()
     keys = [i[0] for i in mycursor.description]
 

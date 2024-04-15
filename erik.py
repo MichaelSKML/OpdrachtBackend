@@ -48,4 +48,10 @@ def receptnaamtoevoegen(naam):
 
 def ingredienttoevoegenaanrecept(ingredient, receptid):
     print(receptid, ingredient["naam"])
+    mydb = algemenefuncties.verbindingdb()
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO ingredient (naam, volgorde, recept_id) VALUES (%s, %s, %s)"
+    val = (ingredient["naam"], ingredient["volgorde"], receptid)
+    mycursor.execute(sql, val)
+    mydb.commit()
     return "ingredient toevoegen"
