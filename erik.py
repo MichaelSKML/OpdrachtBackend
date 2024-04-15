@@ -44,3 +44,7 @@ def receptnaamtoevoegen(naam):
 
     print(mycursor.rowcount, "record inserted.")
     return "Je recept naam is toegevoegd!" 
+
+def ingredienttoevoegenaanrecept(ingredient, receptid):
+    print(receptid, ingredient["naam"])
+    return "ingredient toevoegen2222"
