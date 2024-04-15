@@ -1,6 +1,7 @@
 
 import mysql.connector
 import onzepython
+import algemenefuncties
 
 def methodeerik(tweeword, driewoord):
     mydb = onzepython.mydb
@@ -47,4 +48,4 @@ def receptnaamtoevoegen(naam):
 
 def ingredienttoevoegenaanrecept(ingredient, receptid):
     print(receptid, ingredient["naam"])
-    return "ingredient toevoegen2222"
+    return "ingredient toevoegen"
