@@ -90,3 +90,7 @@ def staptoevoegen(stap):
 @app.route('/receptaanmaken/<naam>')
 def receptnaamtoevoegen(naam):
     return erik.receptnaamtoevoegen(naam)
+
+@app.route('/receptdetails2temp/<gid>')
+def recept2tempdetails(gid):
+  return felix.receptdetailsvanrecept(gid)
