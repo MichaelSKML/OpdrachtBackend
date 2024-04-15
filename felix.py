@@ -78,7 +78,7 @@ def receptdetailsvanrecept(gid):
     )
 
     mycursor = mydb.cursor()
-    mycursor.execute("SELECT * FROM recept WHERE id = '"+str(gid)+"'")
+    mycursor.execute("SELECT * FROM recept LEFT JOIN stappen ON stappen.recept_id = recept.id WHERE recept.id = '"+str(gid)+"'")
     myresult = mycursor.fetchall()
     keys = [i[0] for i in mycursor.description]
 
@@ -97,5 +97,10 @@ def recepttoevoegen2temp(recept):
     return str(mycursor.lastrowid)
 
 def staptoevoegenaanrecept(stap, receptid):
-    print(receptid, stap["Stapbeschrijving"])
+    mydb = algemenefuncties.verbindingdb()
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO stappen (Stapbeschrijving, volgorde, recept_id) VALUES (%s, %s, %s)"
+    val = (stap["Stapbeschrijving"], stap["volgorde"], receptid)
+    mycursor.execute(sql, val)
+    mydb.commit()
     return "stap toevoegen"
