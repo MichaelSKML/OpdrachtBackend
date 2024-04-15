@@ -1,5 +1,6 @@
 print("in bestand van felix")
 import mysql.connector
+import algemenefuncties
 
 def methodevanfelix():
     print("op naar de database")
@@ -85,3 +86,12 @@ def receptdetailsvanrecept(gid):
         dict(zip(keys, row)) for row in myresult
     ]
     return data
+
+def recepttoevoegen2temp(recept):
+    mydb = algemenefuncties.verbindingdb()
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO recept (naam, beschrijving) VALUES (%s, %s)"
+    val = (recept["naam"], '')
+    mycursor.execute(sql, val)
+    mydb.commit()
+    return str(mycursor.lastrowid)

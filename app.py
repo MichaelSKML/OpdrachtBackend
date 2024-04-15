@@ -94,3 +94,8 @@ def receptnaamtoevoegen(naam):
 @app.route('/receptdetails2temp/<gid>')
 def recept2tempdetails(gid):
   return felix.receptdetailsvanrecept(gid)
+
+@app.route('/recepttevoegen2temp', methods=['POST'])
+def recepttoevoegen2temp():
+  data_json = json.loads(request.data.decode('utf-8'))
+  return felix.recepttoevoegen2temp(data_json)
