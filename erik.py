@@ -55,3 +55,13 @@ def ingredienttoevoegenaanrecept(ingredient, receptid):
     mycursor.execute(sql, val)
     mydb.commit()
     return "ingredient toevoegen"
+
+def tagtoevoegen(tag, receptid):
+    print(receptid, tag["naam"])
+    mydb = algemenefuncties.verbindingdb()
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO tag_recept (tag_naam, recept_id) VALUES (%s, %s)"
+    val = (tag["naam"], receptid)
+    mycursor.execute(sql, val)
+    mydb.commit()
+    return "tag toevoegen"
