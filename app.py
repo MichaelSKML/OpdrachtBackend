@@ -109,3 +109,8 @@ def staptoevoegenaanrecept(receptid):
 def ingredienttoevoegenaanrecept(receptid):
   data_json = json.loads(request.data.decode('utf-8'))
   return erik.ingredienttoevoegenaanrecept(data_json, receptid)
+
+@app.route('/tagtoevoegen/<receptid>', methods=['POST'])
+def tagtoevoegen(receptid):
+  data_json = json.loads(request.data.decode('utf-8'))
+  return erik.tagtoevoegen(data_json, receptid)
