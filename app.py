@@ -81,7 +81,8 @@ def detailsrecept(gid):
     varingredientbijrecept = michael.ingredientbijrecept(gid)
     varstappen = michael.stappenbijrecept(gid)
     vartags = michael.tagsbijrecept(gid)
-    return {"recept": varreceptdetails[0] , "ingredient": varingredientbijrecept, "stappen": varstappen, "tags": vartags}
+    varreviews = michael.reviewbijrecept(gid)
+    return {"recept": varreceptdetails[0] , "ingredient": varingredientbijrecept, "stappen": varstappen, "tags": vartags, "review": varreviews}
 
 @app.route('/receptaanmaken/<stap>')
 def staptoevoegen(stap):
