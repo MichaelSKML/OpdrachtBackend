@@ -83,3 +83,24 @@ def tagsbijrecept(gid):
         dict(zip(keys, row)) for row in myresulttags
     ]
   return datatags
+
+def reviewbijrecept(gid):
+  
+  mydb = mysql.connector.connect(
+        host="yc2403allpurpose.mysql.database.azure.com",
+        user="yc2403admin",
+        password="abcd1234ABCD!@#$",
+        database="demopythondag"
+    )
+
+  mycursor = mydb.cursor()
+
+  mycursor.execute("SELECT idreview, review.recept_id, gebruikersnaam, review, beoordeling FROM review INNER JOIN recept ON review.recept_id = recept.recept_id WHERE recept.id = " +str(gid))
+
+  myresultreview = mycursor.fetchall()
+  keys = [i[0] for i in mycursor.description]
+
+  datareview = [
+        dict(zip(keys, row)) for row in myresultreview
+    ]
+  return datareview
