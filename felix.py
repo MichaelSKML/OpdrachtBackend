@@ -91,8 +91,8 @@ def receptdetailsvanrecept(gid):
 def recepttoevoegen2temp(recept):
     mydb = algemenefuncties.verbindingdb()
     mycursor = mydb.cursor()
-    sql = "INSERT INTO recept (naam, beschrijving) VALUES (%s, %s)"
-    val = (recept["naam"], '')
+    sql = "INSERT INTO recept (naam, beschrijving, aantalsterren, bereidingstijd) VALUES (%s, %s, %s, %s)"
+    val = (recept["naam"], recept["description"], recept["graad"], recept["difficulty"])
     mycursor.execute(sql, val)
     mydb.commit()
     return str(mycursor.lastrowid)
