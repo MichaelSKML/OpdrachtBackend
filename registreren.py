@@ -65,41 +65,11 @@ def login():
         session['loggedin'] = True
         session['gebruikersnaam'] = user[1] 
         mijndata = list(user)
-        # mijndata.pop(4)
         mijndata[4] = mijndata[4].isoformat()
         data = tuple(mijndata)
         return json.dumps(data), 201
     else:
         return "Het inloggen is niet gelukt!", 401
-    
-# def login():
-#     data_json = json.loads(request.data.decode('utf-8'))
-#     # username = request.form['gebruikersnaam']
-#     # password = request.form['wachtwoord']
-#     username=data_json["gebruikersnaam"]
-#     password=data_json["wachtwoord"]
-#     # emailadres=data_json["emailadres"]
-#     # geboortedatum=data_json["geboortedatum"]
-#     # geslacht=data_json["geslacht"]
-#     # woonplaats=data_json["woonplaats"]
-    
-#     cursor = mydb.cursor()
-#     cursor.execute("SELECT * FROM account WHERE gebruikersnaam = %s AND wachtwoord = %s", (username, password))
-#     user2 = cursor.fetchone()
-
-#     if user2:
-#         session['loggedin'] = True
-#         session['gebruikersnaam'] = user2[1]
-#         session['wachtwoord'] = user2[2]
-#         session['emailadres'] = user2[3]
-#         session['geboortedatum'] = user2[4]
-#         session['geslacht'] = user2[5]
-#         session['woonplaats'] = user2[6]
-
-#         return "ingelogd"
-    
-#     else:
-#         return "Het inloggen is niet gelukt."
 
 def check_email_exists(email):
     try:
@@ -113,43 +83,6 @@ def check_email_exists(email):
     except mysql.connector.Error as err:
         print(f"Error: {err}")
         return False
-
-@app.route('/accountdata/<username>', methods=['GET'])
-def get_account_data(username):
-    try:
-        # Retrieve user's data from the database using the username
-        cursor = mydb.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM account WHERE gebruikersnaam = %s", (username,))
-        user_data = cursor.fetchone()
-        cursor.close()
-
-        if user_data:
-            return jsonify(user_data), 200
-        else:
-            return jsonify({"message": "Gebruiker niet gevonden."}), 404
-
-    except Exception as e:
-        return jsonify({"message": f"Er is een fout opgetreden: {e}"}), 500
-
-# @app.route('/accountpagina')
-# def account_route():
-#     if 'loggedin' in session:
-#         return render_template('accountpagina.html', 
-#             gebruikersnaam=session.get('gebruikersnaam'), 
-#             wachtwoord=session.get('wachtwoord'), 
-#             emailadres=session.get('emailadres'), 
-#             geboortedatum=session.get('geboortedatum'), 
-#             geslacht=session.get('geslacht'), 
-#             woonplaats=session.get('woonplaats'))
-#     else:
-#         return redirect(url_for('/login')) 
-
-@app.route('/accountpagina/<username>')
-def account_route(username):
-    if 'loggedin' in session:
-        return render_template('accountpagina.html', gebruikersnaam=username)
-    else:
-        return redirect(url_for('inloggen_route2'))
 
 if __name__ == '__main__':
     app.run(debug=True)
