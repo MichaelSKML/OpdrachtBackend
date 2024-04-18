@@ -1,6 +1,7 @@
 
 import mysql.connector
 import onzepython
+import algemenefuncties
 
 def methodeerik(tweeword, driewoord):
     mydb = onzepython.mydb
@@ -44,3 +45,23 @@ def receptnaamtoevoegen(naam):
 
     print(mycursor.rowcount, "record inserted.")
     return "Je recept naam is toegevoegd!" 
+
+def ingredienttoevoegenaanrecept(ingredient, receptid):
+    print(receptid, ingredient["naam"])
+    mydb = algemenefuncties.verbindingdb()
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO ingredient (naam, volgorde, hoeveelheid, recept_id) VALUES (%s, %s, %s, %s)"
+    val = (ingredient["naam"], ingredient["volgorde"], ingredient["hoeveelheid"], receptid)
+    mycursor.execute(sql, val)
+    mydb.commit()
+    return "ingredient toevoegen"
+
+def tagtoevoegen(tag, receptid):
+    print(receptid, tag["naam"])
+    mydb = algemenefuncties.verbindingdb()
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO tag_recept (tag_naam, recept_id) VALUES (%s, %s)"
+    val = (tag["naam"], receptid)
+    mycursor.execute(sql, val)
+    mydb.commit()
+    return "tag toevoegen"

@@ -91,7 +91,8 @@ def detailsrecept(gid):
     varingredientbijrecept = michael.ingredientbijrecept(gid)
     varstappen = michael.stappenbijrecept(gid)
     vartags = michael.tagsbijrecept(gid)
-    return {"recept": varreceptdetails[0] , "ingredient": varingredientbijrecept, "stappen": varstappen, "tags": vartags}
+    varreviews = michael.reviewbijrecept(gid)
+    return {"recept": varreceptdetails[0] , "ingredient": varingredientbijrecept, "stappen": varstappen, "tags": vartags, "review": varreviews}
 
 @app.route('/receptaanmaken/<stap>')
 def staptoevoegen(stap):
@@ -100,6 +101,30 @@ def staptoevoegen(stap):
 @app.route('/receptaanmaken/<naam>')
 def receptnaamtoevoegen(naam):
     return erik.receptnaamtoevoegen(naam)
+
+@app.route('/receptdetails2temp/<gid>')
+def recept2tempdetails(gid):
+  return felix.receptdetailsvanrecept(gid)
+
+@app.route('/recepttevoegen2temp', methods=['POST'])
+def recepttoevoegen2temp():
+  data_json = json.loads(request.data.decode('utf-8'))
+  return felix.recepttoevoegen2temp(data_json)
+
+@app.route('/staptoevoegenaanrecept/<receptid>', methods=['POST'])
+def staptoevoegenaanrecept(receptid):
+  data_json = json.loads(request.data.decode('utf-8'))
+  return felix.staptoevoegenaanrecept(data_json, receptid)
+
+@app.route('/ingredienttoevoegenaanrecept/<receptid>', methods=['POST'])
+def ingredienttoevoegenaanrecept(receptid):
+  data_json = json.loads(request.data.decode('utf-8'))
+  return erik.ingredienttoevoegenaanrecept(data_json, receptid)
+
+@app.route('/tagtoevoegen/<receptid>', methods=['POST'])
+def tagtoevoegen(receptid):
+  data_json = json.loads(request.data.decode('utf-8'))
+  return erik.tagtoevoegen(data_json, receptid)
 
 @app.route('/email', methods=['POST'])
 def email():
