@@ -6,7 +6,7 @@ from flask import Flask
 from flask_cors import CORS
 import json
 import requests
-from flask import Flask, request, session, render_template, redirect, url_for
+from flask import Flask, request, session, render_template, redirect, url_for, jsonify
 
 import erik
 import felix
@@ -63,17 +63,27 @@ def felixpost():
 def registreren_route():
     return registreren.registreren_function()
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST', 'GET'])
 def inloggen_route2():
-    return registreren.login()
+    if request.method == 'POST':
+        return registreren.login()
+        # return "test3232232"
+    else:
+        # Render the login form from the templates folder
+        return render_template('login.html')
   
-@app.route('/email', methods=['POST'])
-def email_route():
-    return registreren.email()
+@app.route('/checkemail', methods=['POST'])
+def check_email_route():
+    data = request.json
+    email = data.get('email')
+    
+    exists = registreren.check_email_exists(email)
+    
+    return jsonify({"exists": exists}), 200
   
-@app.route('/accountpagina')
-def account_route():
-    return registreren.account_route()
+@app.route('/accountpagina/<username>')
+def account_route(username):
+    return registreren.account_route(username)
 
 @app.route('/receptdetails/<gid>')
 def detailsrecept(gid):
@@ -90,3 +100,18 @@ def staptoevoegen(stap):
 @app.route('/receptaanmaken/<naam>')
 def receptnaamtoevoegen(naam):
     return erik.receptnaamtoevoegen(naam)
+
+@app.route('/email', methods=['POST'])
+def email():
+    try:
+        emailadres = request.json.get('emailadres')
+        
+        exists = registreren.check_email_exists(emailadres)
+        
+        if exists:
+            return jsonify({"message": ""}), 200
+        else:
+            return jsonify({"message": ""}), 404
+
+    except KeyError:
+        return jsonify({"message": "Emailadres is niet ingevuld!"}), 400
