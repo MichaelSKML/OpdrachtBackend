@@ -35,7 +35,7 @@ def registreren_function():
         geslacht = data.get('geslacht')
         woonplaats = data.get('woonplaats')
 
-        # SQLquery voor het invoegen van een nieuwe gebruiker
+        # SQL voor het invoegen van een nieuwe gebruiker
         query = "INSERT INTO account (gebruikersnaam, wachtwoord, emailadres, geboortedatum, geslacht, woonplaats) VALUES (%s, %s, %s, %s, %s, %s)"
         cursor.execute(query, (gebruikersnaam, wachtwoord, emailadres, geboortedatum, geslacht, woonplaats))
         
@@ -61,7 +61,7 @@ def login():
     password = data_json["wachtwoord"]
     
     cursor = mydb.cursor()
-    # SQLquery voor het selecteren van een gebruiker op basis van gebruikersnaam en wachtwoord en vervolgens de database cursor sluiten.
+    # SQL voor het selecteren van een gebruiker op basis van gebruikersnaam en wachtwoord en vervolgens de database cursor sluiten.
     cursor.execute("SELECT * FROM account WHERE gebruikersnaam = %s AND wachtwoord = %s", (username, password))
     user = cursor.fetchone()
     cursor.close()
@@ -81,7 +81,7 @@ def login():
 def check_email_exists(email):
     try:
         cursor = mydb.cursor()
-        # SQLquery voor het selecteren van een gebruiker op basis van e-mailadres en vervolgens de database cursor sluiten.
+        # SQL voor het selecteren van een gebruiker op basis van e-mailadres en vervolgens de database cursor sluiten.
         cursor.execute("SELECT * FROM account WHERE emailadres = %s", (email,))
         user = cursor.fetchone()
         cursor.close()
