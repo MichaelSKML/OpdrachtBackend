@@ -39,7 +39,7 @@ def registreren_function():
         mydb.commit()
         
         cursor.close()
-        mydb.close()
+        # mydb.close() -> Commit out because: Close verbinding ivm inloggen na aanmaken account.
 
         return jsonify({"message": "Account succesvol aangemaakt!"}), 200
 
@@ -53,18 +53,21 @@ def login_form():
 
 @app.route('/login', methods=['POST'])
 def login():
-    data_json = json.loads(request.data.decode('utf-8'))
+    data_json = json.loads(request.data)
     username = data_json["gebruikersnaam"]
     password = data_json["wachtwoord"]
     
     cursor = mydb.cursor()
     cursor.execute("SELECT * FROM account WHERE gebruikersnaam = %s AND wachtwoord = %s", (username, password))
     user = cursor.fetchone()
+    cursor.close()
+    # mydb.close() -> Commit out because: Close verbinding ivm inloggen na aanmaken account.
 
     if user:
         session['loggedin'] = True
         session['gebruikersnaam'] = user[1] 
         mijndata = list(user)
+        mijndata[2] = ""
         mijndata[4] = mijndata[4].isoformat()
         data = tuple(mijndata)
         return json.dumps(data), 201
