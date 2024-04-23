@@ -49,7 +49,7 @@ def registreren_function():
     # Foutmelding en statuscode bij een fout
     except Exception as e:
         print(e)
-        return jsonify({"message": "Er is een fout opgetreden."}), 500
+        return jsonify({"message": "Controleer of alle gegevens juist ingevuld zijn."}), 500
 
 
 # Endpoint voor het inloggen van een gebruiker
