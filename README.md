@@ -11,7 +11,7 @@ De backend is geschreven in [Flask](https://flask.palletsprojects.com/) en maakt
 - `/registreren`: Endpoint voor het registreren van een nieuwe gebruiker.
 - `/login`: Endpoint voor het inloggen van een gebruiker.
 - `/checkemail`: Endpoint om te controleren of een e-mailadres al bestaat in de database.
-- `/accountpagina/<username>`: Endpoint om de accountpagina van een gebruiker te renderen.
+- `/accountpagina`: Endpoint om de accountpagina van een gebruiker te laten zien.
 - `/receptdetails/<gid>`: Endpoint om receptdetails op te halen.
 - `/receptaanmaken/<stap>` en `/receptaanmaken/<naam>`: Endpoints voor het toevoegen van stappen en namen aan recepten.
 
