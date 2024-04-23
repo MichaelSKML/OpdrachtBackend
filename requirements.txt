@@ -3,3 +3,5 @@ Flask-Cors
 requests
 mysql-connector
 flask-session
+os
+dotenv
