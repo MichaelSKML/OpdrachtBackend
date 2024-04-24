@@ -3,6 +3,7 @@ from flask_cors import CORS
 import mysql.connector
 import json
 import os
+import algemenefuncties
 from dotenv import load_dotenv
 
 # Flask app initialisatie en CORS aanzetten
@@ -11,6 +12,7 @@ CORS(app)
 
 # Database connectie
 load_dotenv()
+mydb = algemenefuncties.verbindingdb()
 
 # mydb = mysql.connector.connect(
 #     host=os.getenv("DB_HOST"),

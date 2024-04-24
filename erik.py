@@ -4,7 +4,7 @@ import onzepython
 import algemenefuncties
 
 def methodeerik(tweeword, driewoord):
-    mydb = onzepython.mydb
+    mydb = algemenefuncties.verbindingdb()
 
     mycursor = mydb.cursor()
     sql = "INSERT INTO recept (naam, aantalsterren) VALUES (%s, %s)"
@@ -20,7 +20,7 @@ def methodeerik(tweeword, driewoord):
 
 def staptoevoegen(stap):
 
-    mydb = onzepython.mydb
+    mydb = algemenefuncties.verbindingdb()
 
     mycursor = mydb.cursor()
     sql = "INSERT INTO dummy_stappen (stap) VALUES (%s)"
@@ -34,7 +34,7 @@ def staptoevoegen(stap):
 
 def receptnaamtoevoegen(naam):
 
-    mydb = onzepython.mydb
+    mydb = algemenefuncties.verbindingdb()
 
     mycursor = mydb.cursor()
     sql = "INSERT INTO dummy_stappen (naam) VALUES (%s)"
