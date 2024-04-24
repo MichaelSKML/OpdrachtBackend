@@ -13,6 +13,7 @@ import felix
 import dominique
 import registreren
 import michael
+import mike
 
 app = Flask(__name__)
 CORS(app)
@@ -125,7 +126,7 @@ def email():
     
 @app.route("/mike")
 def methodemike():
-  return felix.methodevanmike()
+  return mike.methodemike()
 
 @app.route("/receptfiltertag")
 def receptdetailsmettags():
