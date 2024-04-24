@@ -140,3 +140,7 @@ def email():
 
     except KeyError:
         return jsonify({"message": "Emailadres is niet ingevuld!"}), 400
+    
+  @app.route("/mike")
+def methodemike():
+  return felix.methodevanmike()
