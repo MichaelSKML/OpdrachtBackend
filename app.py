@@ -13,6 +13,7 @@ import felix
 import dominique
 import registreren
 import michael
+import mike
 
 app = Flask(__name__)
 app.secret_key = "607aeae2805bbcc94ab67a45cc0dbbe797b27bb760a8afdf"  
@@ -141,6 +142,6 @@ def email():
     except KeyError:
         return jsonify({"message": "Emailadres is niet ingevuld!"}), 400
     
-  @app.route("/mike")
+@app.route("/mike")
 def methodemike():
-  return felix.methodevanmike()
+  return mike.methodemike()
