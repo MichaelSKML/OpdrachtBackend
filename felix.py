@@ -28,12 +28,7 @@ def tweedemethodevanfelix():
     
 
 def derdemethodevanfelix(eenwoord):
-    mydb = mysql.connector.connect(
-        host="yc2403allpurpose.mysql.database.azure.com",  #port erbij indien mac
-        user="yc2403admin",
-        password="abcd1234ABCD!@#$",
-        database="demopythondag"
-    )
+    mydb = algemenefuncties.verbindingdb()
 
 
     mycursor = mydb.cursor()
@@ -48,12 +43,7 @@ def derdemethodevanfelix(eenwoord):
 
 
 def nuechtmetjson():
-    mydb = mysql.connector.connect(
-        host="yc2403allpurpose.mysql.database.azure.com",  #port erbij indien mac
-        user="yc2403admin",
-        password="abcd1234ABCD!@#$",
-        database="demopythondag"
-    )
+    mydb = algemenefuncties.verbindingdb()
 
     mycursor = mydb.cursor()
 
@@ -70,12 +60,7 @@ def nuechtmetjson():
 # print(derdemethodevanfelix('piet'))
 
 def receptdetailsvanrecept(gid):
-    mydb = mysql.connector.connect(
-    host="yc2403allpurpose.mysql.database.azure.com",  #port erbij indien mac
-    user="yc2403admin",
-    password="abcd1234ABCD!@#$",
-    database="demopythondag"
-    )
+    mydb = algemenefuncties.verbindingdb()
 
     mycursor = mydb.cursor()
 #    mycursor.execute("SELECT * FROM recept LEFT JOIN stappen ON stappen.recept_id = recept.id WHERE recept.id = '"+str(gid)+"'")
