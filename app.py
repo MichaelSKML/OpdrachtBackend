@@ -126,3 +126,7 @@ def email():
 @app.route("/mike")
 def methodemike():
   return felix.methodevanmike()
+
+@app.route("/receptfiltertag")
+def receptdetailsmettags():
+   return michael.receptdetailsgefilterd()
