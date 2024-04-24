@@ -1,11 +1,23 @@
-import webbrowser
+import mysql.connector
+import algemenefuncties
 
-def open_youtube_link(link):
-    webbrowser.open(link)
-    return "is geopend"
+def methodemike():
+    mydb = mysql.connector.connect(
+        host="yc2403allpurpose.mysql.database.azure.com",  #port erbij indien mac
+        user="yc2403admin",
+        password="abcd1234ABCD!@#$",
+        database="demopythondag"
+    )
 
-youtube_link = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-open_youtube_link(youtube_link)
+    mycursor = mydb.cursor()
 
+    mycursor.execute("SELECT idtag_recept, tag_id, naamtag FROM tag_recept INNER JOIN tag ON tag_id = idtag ORDER by naamtag;")
 
-print("test")
+    myresult = mycursor.fetchall()
+    keys = [i[0] for i in mycursor.description]
+
+    data = [
+        dict(zip(keys, row)) for row in myresult
+    ]
+    return data
+
