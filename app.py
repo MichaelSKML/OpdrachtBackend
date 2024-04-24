@@ -1,12 +1,12 @@
 # pip install flask
 # pip install flask-cors
-# pip install Flask-Session
+# pip install python-dotenv
 
 from flask import Flask
 from flask_cors import CORS
 import json
 import requests
-from flask import Flask, request, session, render_template, redirect, url_for, jsonify
+from flask import Flask, request, render_template, jsonify
 
 import erik
 import felix
@@ -16,14 +16,7 @@ import michael
 import mike
 
 app = Flask(__name__)
-app.secret_key = "607aeae2805bbcc94ab67a45cc0dbbe797b27bb760a8afdf"  
-app.config['SESSION_COOKIE_SAMESITE'] = 'None' 
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_COOKIE_SECURE'] = True
-from flask_session import Session
 CORS(app)
-
-Session(app)
 
 @app.route("/")
 def helloWorld():
@@ -41,14 +34,9 @@ def methodefelix2():
 def methodefelix3(variabele1):
   return felix.derdemethodevanfelix(variabele1)
 
-@app.route("/dominique")
-def methodedominique():
-    return dominique.open_youtube_link('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
-
 @app.route("/erik/<eenword>/<tweeword>")
 def methodeerik(eenword, tweeword):
   return erik.methodeerik(eenword, tweeword)
-
 
 @app.route("/felixjson")
 def felixjson():
@@ -68,9 +56,7 @@ def registreren_route():
 def inloggen_route2():
     if request.method == 'POST':
         return registreren.login()
-        # return "test3232232"
     else:
-        # Render the login form from the templates folder
         return render_template('login.html')
   
 @app.route('/checkemail', methods=['POST'])
@@ -81,10 +67,6 @@ def check_email_route():
     exists = registreren.check_email_exists(email)
     
     return jsonify({"exists": exists}), 200
-  
-@app.route('/accountpagina/<username>')
-def account_route(username):
-    return registreren.account_route(username)
 
 @app.route('/receptdetails/<gid>')
 def detailsrecept(gid):
@@ -145,3 +127,7 @@ def email():
 @app.route("/mike")
 def methodemike():
   return mike.methodemike()
+
+@app.route("/receptfiltertag")
+def receptdetailsmettags():
+   return michael.receptdetailsgefilterd()

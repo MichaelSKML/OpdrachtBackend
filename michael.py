@@ -1,13 +1,9 @@
 import mysql.connector
+import algemenefuncties
+
+mydb = algemenefuncties.verbindingdb()
 
 def receptdetails(gid):
-  
-  mydb = mysql.connector.connect(
-        host="yc2403allpurpose.mysql.database.azure.com",  #port erbij indien mac
-        user="yc2403admin",
-        password="abcd1234ABCD!@#$",
-        database="demopythondag"
-    )
 
   mycursor = mydb.cursor()
 
@@ -22,13 +18,6 @@ def receptdetails(gid):
   return data
 
 def ingredientbijrecept(gid):
-  
-  mydb = mysql.connector.connect(
-        host="yc2403allpurpose.mysql.database.azure.com",
-        user="yc2403admin",
-        password="abcd1234ABCD!@#$",
-        database="demopythondag"
-    )
 
   mycursor = mydb.cursor()
 
@@ -44,13 +33,6 @@ def ingredientbijrecept(gid):
 
 def stappenbijrecept(gid):
   
-  mydb = mysql.connector.connect(
-        host="yc2403allpurpose.mysql.database.azure.com",
-        user="yc2403admin",
-        password="abcd1234ABCD!@#$",
-        database="demopythondag"
-    )
-
   mycursor = mydb.cursor()
 
   mycursor.execute("SELECT stappen.id, Stapbeschrijving, stappen.Afbeelding, stappen.recept_id, volgorde FROM stappen INNER JOIN recept ON stappen.recept_id = recept.recept_id WHERE recept.id = " +str(gid))
@@ -65,13 +47,6 @@ def stappenbijrecept(gid):
 
 def tagsbijrecept(gid):
   
-  mydb = mysql.connector.connect(
-        host="yc2403allpurpose.mysql.database.azure.com",
-        user="yc2403admin",
-        password="abcd1234ABCD!@#$",
-        database="demopythondag"
-    )
-
   mycursor = mydb.cursor()
 
   mycursor.execute("SELECT idtag_recept, tag_id, naamtag FROM tag_recept INNER JOIN tag ON tag_id = idtag WHERE idtag_recept = " +str(gid))
@@ -86,13 +61,6 @@ def tagsbijrecept(gid):
 
 def reviewbijrecept(gid):
   
-  mydb = mysql.connector.connect(
-        host="yc2403allpurpose.mysql.database.azure.com",
-        user="yc2403admin",
-        password="abcd1234ABCD!@#$",
-        database="demopythondag"
-    )
-
   mycursor = mydb.cursor()
 
   mycursor.execute("SELECT idreview, review.recept_id, gebruikersnaam, review, beoordeling FROM review INNER JOIN recept ON review.recept_id = recept.recept_id WHERE recept.id = " +str(gid))
@@ -104,3 +72,17 @@ def reviewbijrecept(gid):
         dict(zip(keys, row)) for row in myresultreview
     ]
   return datareview
+
+def receptdetailsgefilterd():
+  
+  mycursor = mydb.cursor()
+
+  mycursor.execute("SELECT idtag_recept, tag_id, naamtag, recept.naam, recept.aantalsterren, recept.afbeelding FROM tag_recept INNER JOIN tag ON tag_id = idtag INNER JOIN recept ON recept.id = idtag_recept ORDER by naamtag;")
+
+  myresultgefilderd = mycursor.fetchall()
+  keys = [i[0] for i in mycursor.description]
+
+  datagefilterd = [
+        dict(zip(keys, row)) for row in myresultgefilderd
+    ]
+  return datagefilterd
