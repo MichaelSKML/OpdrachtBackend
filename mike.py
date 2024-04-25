@@ -11,7 +11,7 @@ def methodemike():
 
     mycursor = mydb.cursor()
 
-    mycursor.execute("SELECT idtag_recept, tag_id, naamtag FROM tag_recept INNER JOIN tag ON tag_id = idtag ORDER by naamtag;")
+    mycursor.execute("SELECT idtag_recept, tag_id, naamtag, recept.naam, recept.aantalsterren, recept.afbeelding FROM tag_recept INNER JOIN tag ON tag_id = idtag INNER JOIN recept ON recept.id = idtag_recept ORDER by naamtag;")
 
     myresult = mycursor.fetchall()
     keys = [i[0] for i in mycursor.description]
